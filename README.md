@@ -2,8 +2,8 @@
 
 DSN import/exporter for pcbnew. Intended for use with autorouters.
 
+Requires > V7.99
 
-+ Free software: GNU General Public License v3
 
 
 ## Credits
