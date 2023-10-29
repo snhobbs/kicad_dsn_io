@@ -6,7 +6,7 @@ import pcbnew
 
 @click.option("--board", required=True, help="PCBNEW PCB File")
 @click.option("--i", help="SES file to import to board file")
-@click.option("--o", help="DSN output file name")
+@click.option("--o", help="Output file name (DSN or kicad_pcb)")
 @click.command()
 def main(board, i, o) -> None:
     """Console script for kicad_dsn_io."""
@@ -14,13 +14,14 @@ def main(board, i, o) -> None:
         if o is None:
             raise UserWarning("Needs either an import or export argument")
         b = pcbnew.LoadBoard(board)
-        pcbnew.ExportSpecctraDSN(o)
+        resp = pcbnew.ExportSpecctraDSN(b, o)
+        assert(resp)
         print(f"Exported {o} from {board}")
     else:
         b = pcbnew.LoadBoard(board)
         resp = pcbnew.ImportSpecctraSES(b, i)
         assert(resp)
-        b.Save(board)
+        b.Save(o)
         print(f"Imported {i} into {board}")
     return 0
 
